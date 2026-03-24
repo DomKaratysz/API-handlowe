@@ -1,29 +1,27 @@
 from fastapi import APIRouter, HTTPException
 from app.database import get_connection
 
-router = APIRouter(prefix="/tasks", tags=["tasks"])
+router = APIRouter(prefix="/users", tags=["users"])
 
 
 @router.get("/")
-def get_tasks():
+def get_users():
     query = """
         SELECT
-            t.id,
-            t.nazwa,
-            t.opis,
-            t.kategoria_id,
-            t.czas_utworzenia,
-            t.czas_modyfikacji,
-            t.czas_rozpoczecia,
-            t.czas_zakonczenia,
-            t.tworca_id,
-            t.wykonawca_id,
-            t.modyfikowal_id,
-            t.is_deleted,
-            t.status
-        FROM crm.tasks t
-        WHERE COALESCE(t.is_deleted, false) = false
-        ORDER BY t.id DESC
+            u.id,
+            u.imie,
+            u.nazwisko,
+            u.email,
+            u.telefon,
+            u.stanowisko,
+            u.przelozony_id,
+            u.dzial,
+            u.oddzial,
+            u.is_admin,
+            u.is_delete
+        FROM crm.users u
+        WHERE COALESCE(u.is_delete, false) = false
+        ORDER BY u.nazwisko, u.imie
     """
 
     try:
