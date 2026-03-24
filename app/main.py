@@ -1,5 +1,5 @@
 from fastapi import FastAPI, HTTPException
-from app.routers import projects, tasks, users
+from app.routers import projects, tasks, users, dictionaries
 from app.database import get_connection
 
 app = FastAPI(title="API handlowe")
@@ -7,6 +7,7 @@ app = FastAPI(title="API handlowe")
 app.include_router(projects.router)
 app.include_router(tasks.router)
 app.include_router(users.router)
+app.include_router(dictionaries.router)
 
 
 @app.get("/")
