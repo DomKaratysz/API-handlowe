@@ -1,5 +1,14 @@
 from fastapi import FastAPI, HTTPException
-from app.routers import projects, tasks, users, dictionaries
+from app.routers import (
+    projects,
+    tasks,
+    users,
+    dictionaries,
+    erp,
+    project_task_links,
+    project_team,
+    project_erp_links
+)
 from app.database import get_connection
 
 app = FastAPI(title="API handlowe")
@@ -8,6 +17,10 @@ app.include_router(projects.router)
 app.include_router(tasks.router)
 app.include_router(users.router)
 app.include_router(dictionaries.router)
+app.include_router(erp.router)
+app.include_router(project_task_links.router)
+app.include_router(project_team.router)
+app.include_router(project_erp_links.router)
 
 
 @app.get("/")
