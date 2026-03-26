@@ -30,27 +30,30 @@ API-handlowe/
 ├─ docker-compose.yml
 ├─ requirements.txt
 └─ README.md
+```
 
-Wymagania
+## Wymagania
 Lokalnie
 Python 3.11+ lub 3.12
 dostęp do bazy PostgreSQL
 plik .env z konfiguracją
+
 Docker
 Docker Desktop
 Docker Compose
+
 Konfiguracja .env
 
 Utwórz plik .env w katalogu głównym projektu.
-
 Przykład:
-
 DB_HOST=127.0.0.1
 DB_PORT=5432
 DB_NAME=twoja_baza
 DB_USER=twoj_user
 DB_PASSWORD=twoje_haslo
+
 Uruchomienie lokalne
+
 Instalacja zależności
 python -m pip install -r requirements.txt
 Start aplikacji
@@ -59,6 +62,7 @@ Adresy lokalne
 API: http://127.0.0.1:8000
 Swagger: http://127.0.0.1:8000/docs
 Health check: http://127.0.0.1:8000/health
+
 Uruchomienie w Dockerze
 Build i start
 docker compose up --build
@@ -72,7 +76,8 @@ Adresy Docker
 API: http://127.0.0.1:4008
 Swagger: http://127.0.0.1:4008/docs
 Health check: http://127.0.0.1:4008/health
-Główne endpointy
+
+## Główne endpointy
 Projekty
 GET /projects
 GET /projects/{id}
