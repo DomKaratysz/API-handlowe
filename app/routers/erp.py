@@ -16,7 +16,7 @@ def get_kntkarty(search: str = Query(default="", max_length=100)):
             k.nip,
             k.nazwa,
             k.adres
-        FROM crm.erp_kntkarty_view k
+        FROM handlowe.kntkarty_from_public k
         WHERE (
             %s = ''
             OR CAST(k.gidnumer AS TEXT) ILIKE %s
@@ -64,7 +64,7 @@ def get_kntosoby(
             o.email,
             o.telefon,
             o.firma
-        FROM crm.erp_kntosoby_view o
+        FROM handlowe.kntosoby_from_public o
         WHERE 1=1
     """
 
