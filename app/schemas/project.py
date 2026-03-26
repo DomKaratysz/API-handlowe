@@ -17,6 +17,7 @@ class ProjectCreate(BaseModel):
     project_type_id: Optional[int] = None
     estimated_value_net: Optional[Decimal] = None
     planned_close_date: Optional[date] = None
+    actual_close_date: Optional[date] = None
     description: Optional[str] = None
     internal_notes: Optional[str] = None
     created_by: Optional[int] = None

@@ -99,3 +99,120 @@ def get_kntosoby(
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+@router.get("/tranag")
+def get_tranag(
+    search: str = Query(default="", max_length=100),
+    gidnumer_kontrahenta: int | None = None
+):
+    search_like = f"%{search}%"
+
+    query = """
+        SELECT
+            t.gidtyp,
+            t.gidfirma,
+            t.gidnumer,
+            t.gidlp,
+            t.numer,
+            t.data,
+            t.stan,
+            t.typ,
+            t.akronim_kontrahenta,
+            t.nip_kontrahenta,
+            t.gidnumer_kontrahenta
+        FROM handlowe.tranag_from_public t
+        WHERE 1=1
+    """
+
+    params = []
+
+    if gidnumer_kontrahenta is not None:
+        query += " AND t.gidnumer_kontrahenta = %s"
+        params.append(gidnumer_kontrahenta)
+
+    if search != "":
+        query += """
+            AND (
+                CAST(t.gidnumer AS TEXT) ILIKE %s
+                OR COALESCE(t.numer, '') ILIKE %s
+                OR COALESCE(t.stan, '') ILIKE %s
+                OR COALESCE(t.typ, '') ILIKE %s
+                OR COALESCE(t.akronim_kontrahenta, '') ILIKE %s
+                OR COALESCE(t.nip_kontrahenta, '') ILIKE %s
+            )
+        """
+        params.extend([search_like, search_like, search_like, search_like, search_like, search_like])
+
+    query += " ORDER BY t.gidnumer DESC LIMIT 100"
+
+    try:
+        with get_connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(query, params)
+                rows = cur.fetchall()
+                columns = [desc[0] for desc in cur.description]
+
+        items = [dict(zip(columns, row)) for row in rows]
+        return {"items": items}
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/zamnag")
+def get_zamnag(
+    search: str = Query(default="", max_length=100),
+    gidnumer_kontrahenta: int | None = None
+):
+    search_like = f"%{search}%"
+
+    query = """
+        SELECT
+            z.gidtyp,
+            z.gidfirma,
+            z.gidnumer,
+            z.gidlp,
+            z.numer,
+            z.data,
+            z.stan,
+            z.typ,
+            z.akronim_kontrahenta,
+            z.nip_kontrahenta,
+            z.gidnumer_kontrahenta
+        FROM handlowe.zamnag_from_public z
+        WHERE 1=1
+    """
+
+    params = []
+
+    if gidnumer_kontrahenta is not None:
+        query += " AND z.gidnumer_kontrahenta = %s"
+        params.append(gidnumer_kontrahenta)
+
+    if search != "":
+        query += """
+            AND (
+                CAST(z.gidnumer AS TEXT) ILIKE %s
+                OR COALESCE(z.numer, '') ILIKE %s
+                OR COALESCE(z.stan, '') ILIKE %s
+                OR COALESCE(z.typ, '') ILIKE %s
+                OR COALESCE(z.akronim_kontrahenta, '') ILIKE %s
+                OR COALESCE(z.nip_kontrahenta, '') ILIKE %s
+            )
+        """
+        params.extend([search_like, search_like, search_like, search_like, search_like, search_like])
+
+    query += " ORDER BY z.gidnumer DESC LIMIT 100"
+
+    try:
+        with get_connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(query, params)
+                rows = cur.fetchall()
+                columns = [desc[0] for desc in cur.description]
+
+        items = [dict(zip(columns, row)) for row in rows]
+        return {"items": items}
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

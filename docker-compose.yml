@@ -1,0 +1,9 @@
+services:
+  api_handlowe:
+    build: .
+    container_name: api_handlowe
+    ports:
+      - "4008:8000"
+    env_file:
+      - .env
+    restart: unless-stopped

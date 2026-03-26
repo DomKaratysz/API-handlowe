@@ -7,7 +7,8 @@ from app.routers import (
     erp,
     project_task_links,
     project_team,
-    project_erp_links
+    project_erp_links,
+    project_stage_history
 )
 from app.database import get_connection
 
@@ -21,6 +22,7 @@ app.include_router(erp.router)
 app.include_router(project_task_links.router)
 app.include_router(project_team.router)
 app.include_router(project_erp_links.router)
+app.include_router(project_stage_history.router)
 
 
 @app.get("/")
